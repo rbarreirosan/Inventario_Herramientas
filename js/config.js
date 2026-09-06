@@ -8,7 +8,7 @@
 
 const CONFIG = {
   // URL que te da Apps Script al desplegar (Implementar → Aplicación web)
-  WEB_APP_URL: "PEGA_AQUI_LA_URL_DEL_WEB_APP",
+  WEB_APP_URL: "https://script.google.com/macros/s/AKfycbxMfWGmvPKdS5xKnp2TQenyrjXsW6trPAlci0iRKg31xmM6Au39A2GFCfXddvnvd629/exec",
 
   // Debe coincidir con la propiedad TOKEN en Script Properties de Apps Script
   TOKEN: "taller-7a336fa9299d20dc",
