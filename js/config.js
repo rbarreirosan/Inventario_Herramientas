@@ -37,7 +37,7 @@ const ST = {
 };
 
 // Sugerencias rápidas de técnicos en el modal de préstamo
-const PEOPLE = ["Ramírez", "Ortega", "J. Luna", "Beto", "Chávez"];
+const PEOPLE = ["Rafa", "Diego", "Toño"];
 
 // ¿Estamos en modo demo? (no hay backend configurado todavía)
 const DEMO_MODE = !CONFIG.WEB_APP_URL || CONFIG.WEB_APP_URL.indexOf("PEGA_AQUI") === 0;
