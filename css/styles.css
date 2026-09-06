@@ -1,0 +1,36 @@
+/* =============================================================
+   Base global. El grueso del estilo va inline en los componentes
+   (render.js) para replicar exactamente el diseño de referencia.
+   ============================================================= */
+
+body {
+  margin: 0;
+  background: #E8E7E4;
+  font-family: 'Archivo', Helvetica, Arial, sans-serif;
+  color: #16181A;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+
+a { color: #17507E; text-decoration: underline; }
+a:hover { color: #0F3A5E; }
+
+input, button { font-family: inherit; }
+input:focus { outline: 3px solid #16181A; outline-offset: 1px; }
+button:disabled { opacity: 1; } /* el estado deshabilitado se comunica por color, no por opacidad */
+
+/* Ocultar scrollbar en las filas de chips (se sigue pudiendo arrastrar) */
+.scroll-x { -ms-overflow-style: none; scrollbar-width: none; }
+.scroll-x::-webkit-scrollbar { display: none; }
+
+/* Spinner de carga / operaciones */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(22, 24, 26, 0.18);
+  border-top-color: #16181A;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

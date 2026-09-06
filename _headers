@@ -1,0 +1,18 @@
+# Cloudflare Pages — cabeceras
+
+# El HTML no se cachea (para recibir cambios al instante)
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+
+# JS y CSS revalidan (evita servir config.js viejo tras actualizar URL/token)
+/js/*
+  Cache-Control: no-cache
+/css/*
+  Cache-Control: no-cache
+
+# Seguridad básica
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
