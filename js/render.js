@@ -397,7 +397,8 @@ function modalsHtml() {
     const locOpts = LOCS.map((l) => `<button class="js" data-act="formLoc" data-val="${escapeHtml(l)}" style="height:60px;border-radius:4px;border:3px solid ${f.loc === l ? ACC[l] : "#C7C4BF"};background:${f.loc === l ? ACC[l] : "#FFFFFF"};color:${f.loc === l ? "#FFFFFF" : "#3A3D41"};font-size:19px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;cursor:pointer">${escapeHtml(l)}</button>`).join("");
     const catOpts = CATS.map((c) => `<button class="js" data-act="formCat" data-val="${escapeHtml(c)}" style="height:56px;padding:0 14px;text-align:left;border-radius:4px;border:2px solid ${f.cat === c ? "#16181A" : "#C7C4BF"};background:${f.cat === c ? "#16181A" : "#FFFFFF"};color:${f.cat === c ? "#F4F3F1" : "#3A3D41"};font-size:16px;font-weight:700;cursor:pointer">${escapeHtml(c)}</button>`).join("");
     const controlHint = "060-A";
-    const canSave = f.name.trim() && stripPrefix(f.control).trim().length > 0;
+    const ctrlDup = stripPrefix(f.control).trim().length > 0 && controlExists(f.control);
+    const canSave = f.name.trim() && stripPrefix(f.control).trim().length > 0 && !ctrlDup;
 
     html += `
       <div class="js" data-act="closeAddBg" style="position:fixed;inset:0;z-index:65;background:rgba(10,11,12,0.62);display:flex;align-items:flex-end;justify-content:center">
@@ -425,7 +426,8 @@ function modalsHtml() {
             </div>
             <div>
               <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#4A4D51;margin-bottom:8px">Número de control</div>
-              <input id="f_control" class="js" data-field="form.control" type="text" value="${escapeHtml(f.control)}" placeholder="${controlHint}" style="width:100%;height:58px;border:2px solid #16181A;border-radius:4px;background:#FFFFFF;font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;padding:0 14px">
+              <input id="f_control" class="js" data-field="form.control" type="text" value="${escapeHtml(f.control)}" placeholder="${controlHint}" style="width:100%;height:58px;border:2px solid ${ctrlDup ? "#B3261E" : "#16181A"};border-radius:4px;background:${ctrlDup ? "#FFF3F2" : "#FFFFFF"};color:${ctrlDup ? "#8E1B15" : "#16181A"};font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;padding:0 14px">
+              ${ctrlDup ? `<div style="margin-top:8px;font-size:14px;font-weight:700;color:#8E1B15">Ya existe una herramienta con el número de control <b>${escapeHtml(f.control.trim())}</b>. Cambia el número o el sufijo (A/B/C).</div>` : ""}
             </div>
             ${isMedicion(f.cat) ? `
             <div style="border:2px solid #B45309;border-radius:4px;background:#FFF7EC;padding:14px">

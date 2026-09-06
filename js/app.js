@@ -87,6 +87,12 @@ async function actReturn(id) {
 async function actAdd() {
   const f = state.form;
   if (!f.name.trim() || stripPrefix(f.control).trim() === "") return;
+  if (controlExists(f.control)) {
+    state.banner = "Ya existe una herramienta con el número de control " + f.control.trim();
+    if (navigator.vibrate) navigator.vibrate(200);
+    renderApp();
+    return;
+  }
   const payload = {
     name: f.name.trim(),
     brand: f.brand.trim(),
@@ -197,6 +203,7 @@ document.addEventListener("click", (e) => {
     case "openAdd":
       state.addOpen = true;
       state.form.control = ctrlPrefix(state.form.loc, state.form.cat);
+      state.ctrlWasDup = false;
       renderApp();
       break;
     case "closeAdd":
@@ -242,6 +249,12 @@ document.addEventListener("input", (e) => {
   }
   if (field.indexOf("form.") === 0) {
     state.form[field.slice(5)] = value;
+    // aviso de número de control duplicado: vibrar al detectarlo
+    if (field === "form.control") {
+      const dup = stripPrefix(value).trim().length > 0 && controlExists(value);
+      if (dup && !state.ctrlWasDup && navigator.vibrate) navigator.vibrate(200);
+      state.ctrlWasDup = dup;
+    }
     renderApp();
     return;
   }

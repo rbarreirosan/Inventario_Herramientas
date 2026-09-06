@@ -30,6 +30,7 @@ const state = {
 
   busy: false,
   banner: "", // mensaje de error visible
+  ctrlWasDup: false, // control interno para vibrar solo al detectar duplicado
 };
 
 /* ---------- utilidades ---------- */
@@ -98,6 +99,19 @@ function stripPrefix(control) {
 // Reaplica el prefijo correcto conservando lo que el usuario ya escribió
 function applyPrefix(loc, cat, control) {
   return ctrlPrefix(loc, cat) + stripPrefix(control);
+}
+
+// Normaliza un número de control para comparar (sin espacios, mayúsculas)
+function normControl(s) {
+  return String(s || "").trim().toUpperCase().replace(/\s+/g, "");
+}
+
+// ¿Ya existe una herramienta con este mismo número de control?
+// (exceptId permite ignorar una herramienta concreta, p. ej. al editar)
+function controlExists(control, exceptId) {
+  const target = normControl(control);
+  if (!target) return false;
+  return state.tools.some((t) => normControl(t.control) === target && String(t.id) !== String(exceptId == null ? "" : exceptId));
 }
 
 /* ---------- estilos derivados (ported del diseño) ---------- */

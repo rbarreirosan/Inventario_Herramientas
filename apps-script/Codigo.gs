@@ -177,10 +177,29 @@ function findToolRow_(sh, c, id) {
 
 /* ---------- escritura ---------- */
 
+// Normaliza un número de control para comparar (sin espacios, mayúsculas)
+function normControl_(s) {
+  return String(s || "").trim().toUpperCase().replace(/\s+/g, "");
+}
+
 function addTool_(p) {
   var sh = sheet_(SHEET_TOOLS);
-  var headers = sh.getDataRange().getValues()[0];
+  var data = sh.getDataRange().getValues();
+  var headers = data[0];
   var c = colMap_(headers, TOOLS_SPEC);
+
+  // Red de seguridad: no permitir número de control duplicado
+  if (c.control >= 0) {
+    var wanted = normControl_(p.control);
+    if (wanted) {
+      for (var r = 1; r < data.length; r++) {
+        if (normControl_(data[r][c.control]) === wanted) {
+          return { ok: false, error: "Ya existe una herramienta con el número de control " + p.control };
+        }
+      }
+    }
+  }
+
   var id = "H-" + Date.now();
   var row = new Array(headers.length).fill("");
   if (c.id >= 0) row[c.id] = id;
