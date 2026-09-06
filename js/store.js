@@ -75,6 +75,31 @@ function isMedicion(cat) {
   return cat === "Equipo de medición";
 }
 
+/* ---------- prefijo automático del número de control ---------- */
+
+const LOC_CODE = { Fosa: "FO", Arriba: "AR" };
+const CAT_CODE = {
+  "Herramienta de mano": "HM",
+  "Herramienta especial/eléctrica": "HE",
+  "Equipo de medición": "EM",
+  "Equipo fijo": "EF",
+};
+
+// Prefijo según ubicación + categoría, p. ej. "FO-HM-"
+function ctrlPrefix(loc, cat) {
+  return (LOC_CODE[loc] || "") + "-" + (CAT_CODE[cat] || "") + "-";
+}
+
+// Quita un prefijo tipo "XX-XX-" del inicio (para reemplazarlo por otro)
+function stripPrefix(control) {
+  return String(control || "").replace(/^[A-Za-z]{2}-[A-Za-z]{2}-/, "");
+}
+
+// Reaplica el prefijo correcto conservando lo que el usuario ya escribió
+function applyPrefix(loc, cat, control) {
+  return ctrlPrefix(loc, cat) + stripPrefix(control);
+}
+
 /* ---------- estilos derivados (ported del diseño) ---------- */
 
 function badgeStyle(status) {

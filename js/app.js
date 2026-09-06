@@ -86,7 +86,7 @@ async function actReturn(id) {
 
 async function actAdd() {
   const f = state.form;
-  if (!f.name.trim() || !f.control.trim()) return;
+  if (!f.name.trim() || stripPrefix(f.control).trim() === "") return;
   const payload = {
     name: f.name.trim(),
     brand: f.brand.trim(),
@@ -194,11 +194,23 @@ document.addEventListener("click", (e) => {
     case "doDelete": actDelete(id); break;
 
     // agregar
-    case "openAdd": state.addOpen = true; renderApp(); break;
+    case "openAdd":
+      state.addOpen = true;
+      state.form.control = ctrlPrefix(state.form.loc, state.form.cat);
+      renderApp();
+      break;
     case "closeAdd":
     case "closeAddBg": state.addOpen = false; renderApp(); break;
-    case "formLoc": state.form.loc = val; renderApp(); break;
-    case "formCat": state.form.cat = val; renderApp(); break;
+    case "formLoc":
+      state.form.loc = val;
+      state.form.control = applyPrefix(val, state.form.cat, state.form.control);
+      renderApp();
+      break;
+    case "formCat":
+      state.form.cat = val;
+      state.form.control = applyPrefix(state.form.loc, val, state.form.control);
+      renderApp();
+      break;
     case "saveNew": actAdd(); break;
 
     // conteo
