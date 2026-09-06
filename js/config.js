@@ -11,7 +11,7 @@ const CONFIG = {
   WEB_APP_URL: "PEGA_AQUI_LA_URL_DEL_WEB_APP",
 
   // Debe coincidir con la propiedad TOKEN en Script Properties de Apps Script
-  TOKEN: "PEGA_AQUI_EL_TOKEN",
+  TOKEN: "taller-7a336fa9299d20dc",
 };
 
 /* ---- Constantes de dominio (deben coincidir con el diseño) ---- */
